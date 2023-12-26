@@ -54,7 +54,8 @@ module multiply(
         end
         
         mantissaOut = mantissaNotNormalized[46:24];
-        exponentOut = exponentNotNormalized + shiftBy + bias;
+        exponentOut = exponentNotNormalized + bias;
+//exponentOut = exponentNotNormalized + shiftBy + bias;
         $display("Shift by %b ", shiftBy);
         $display("Mantissa out %b ", mantissaOut, " Exponent out %b ", exponentOut, " Sign out %b ", signOut);
         
