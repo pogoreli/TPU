@@ -23,7 +23,7 @@ module sum_9bit(
             outSign = signA;
         end else begin
             if(valueA < valueB) begin
-                outValue = valueB - signA;
+                outValue = valueB - valueA;
                 outSign = signB;
             end else begin
                 outValue = valueA - valueB;
