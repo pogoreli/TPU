@@ -37,6 +37,19 @@ module tb_sum;
 
     initial begin
         // Test with both numbers positive
+        A = 0.0;
+        B = 5.0;
+        expected = A + B;
+        inputA = real_to_ieee(A);
+        inputB = real_to_ieee(B);
+        #10;
+        diff = absolute(($bitstoshortreal(out)) - expected);
+        passed = diff < tolerance;
+        $display("A value is ", $bitstoshortreal(inputA), " B value is ", $bitstoshortreal(inputB));
+        $display("Test 0: 0 + 5 = ", $bitstoshortreal(out), " Expected: ", expected, " Passed: ", passed);
+        numberOfTests++;
+        numberOfSuccessfullTests += passed;
+        
         A = 3.5;
         B = 2.5;
         expected = A + B;
