@@ -1,10 +1,10 @@
 `timescale 1ns / 1ps
 
-module tb_sum;
+module tb_power;
     logic [31:0] inputA, inputB;
     logic [31:0] out;
     
-    shortreal tolerance = 0.000000001;
+    shortreal tolerance = 0.001;
     shortreal A;
     shortreal B;
     shortreal expected;
@@ -15,7 +15,7 @@ module tb_sum;
     int numberOfSuccessfullTests;
 
     // Instantiate the multiply module
-    sum uut (.inputA(inputA), .inputB(inputB), .out(out));
+    power uut (.inputA(inputA), .inputB(inputB), .out(out));
     
     // Convert a floating-point number to its IEEE 754 representation
     function automatic [31:0] real_to_ieee(real value);
@@ -36,106 +36,86 @@ module tb_sum;
     endfunction
 
     initial begin
-        // Test with both numbers positive
-        A = 0.5;
-        B = -1.0;
-        expected = A + B;
-        inputA = real_to_ieee(A);
-        inputB = real_to_ieee(B);
-        #20;
-        diff = absolute(($bitstoshortreal(out)) - expected);
-        passed = diff < tolerance;
-        $display("A value is ", $bitstoshortreal(inputA), " B value is ", $bitstoshortreal(inputB));
-        $display("Test 0: 0.5 + -1 = ", $bitstoshortreal(out), " Expected: ", expected, " Passed: ", passed);
-        numberOfTests++;
-        numberOfSuccessfullTests += passed;
-    
-        // Test with both numbers positive
-        A = 0.0;
-        B = 5.0;
-        expected = A + B;
+        A = 2;
+        B = 2;
+        expected = 4;
         inputA = real_to_ieee(A);
         inputB = real_to_ieee(B);
         #10;
         diff = absolute(($bitstoshortreal(out)) - expected);
         passed = diff < tolerance;
         $display("A value is ", $bitstoshortreal(inputA), " B value is ", $bitstoshortreal(inputB));
-        $display("Test 0: 0 + 5 = ", $bitstoshortreal(out), " Expected: ", expected, " Passed: ", passed);
+        $display("Test 1: = ", $bitstoshortreal(out), " Expected: ", expected, " Passed: ", passed);
         numberOfTests++;
         numberOfSuccessfullTests += passed;
         
-        A = 3.5;
-        B = 2.5;
-        expected = A + B;
+        A = 2;
+        B = -2;
+        expected = 0.25;
         inputA = real_to_ieee(A);
         inputB = real_to_ieee(B);
         #10;
         diff = absolute(($bitstoshortreal(out)) - expected);
         passed = diff < tolerance;
         $display("A value is ", $bitstoshortreal(inputA), " B value is ", $bitstoshortreal(inputB));
-        $display("Test 1: 3.5 + 2.5 = ", $bitstoshortreal(out), " Expected: ", expected, " Passed: ", passed);
+        $display("Test 2: = ", $bitstoshortreal(out), " Expected: ", expected, " Passed: ", passed);
         numberOfTests++;
         numberOfSuccessfullTests += passed;
-        
-        // Test with both numbers positive
-        A = 3.5;
-        B = 40.0;
-        expected = A + B;
+
+        A = 3;
+        B = 2.3;
+        expected = 12.5135025328;
         inputA = real_to_ieee(A);
         inputB = real_to_ieee(B);
         #10;
         diff = absolute(($bitstoshortreal(out)) - expected);
         passed = diff < tolerance;
         $display("A value is ", $bitstoshortreal(inputA), " B value is ", $bitstoshortreal(inputB));
-        $display("Test 2: 3.5 + 40.0 = ", $bitstoshortreal(out), " Expected: ", expected, " Passed: ", passed);
+        $display("Test 3: = ", $bitstoshortreal(out), " Expected: ", expected, " Passed: ", passed);
         numberOfTests++;
         numberOfSuccessfullTests += passed;
         
-        // Test with one number positive and one number negative
-        A = 3.5;
-        B = -40.0;
-        expected = A + B;
+        A = 5;
+        B = 0.5;
+        expected = 2.2360679775;
         inputA = real_to_ieee(A);
         inputB = real_to_ieee(B);
         #10;
         diff = absolute(($bitstoshortreal(out)) - expected);
         passed = diff < tolerance;
         $display("A value is ", $bitstoshortreal(inputA), " B value is ", $bitstoshortreal(inputB));
-        $display("Test 3: 3.5 + -40.0 = ", $bitstoshortreal(out), " Expected: ", expected, " Passed: ", passed);
+        $display("Test 4: = ", $bitstoshortreal(out), " Expected: ", expected, " Passed: ", passed);
         numberOfTests++;
         numberOfSuccessfullTests += passed;
         
-        // Test with one number positive and one number negative
-        A = 3.5;
-        B = -2.5;
-        expected = A + B;
+        A = 2;
+        B = 8;
+        expected = 256;
         inputA = real_to_ieee(A);
         inputB = real_to_ieee(B);
         #10;
         diff = absolute(($bitstoshortreal(out)) - expected);
         passed = diff < tolerance;
         $display("A value is ", $bitstoshortreal(inputA), " B value is ", $bitstoshortreal(inputB));
-        $display("Test 4: 3.5 + -2.5 = ", $bitstoshortreal(out), " Expected: ", expected, " Passed: ", passed);
+        $display("Test 5: = ", $bitstoshortreal(out), " Expected: ", expected, " Passed: ", passed);
         numberOfTests++;
         numberOfSuccessfullTests += passed;
         
-        for (int i = 5; i <= 80; i++) begin
-            A = random_shortreal();
-            B = random_shortreal();
-            expected = A + B;
-            inputA = real_to_ieee(A);
-            inputB = real_to_ieee(B);
-            #10;
-            diff = absolute(($bitstoshortreal(out)) - expected);
-            passed = diff < tolerance;
-            $display("A value is ", $bitstoshortreal(inputA), " B value is ", $bitstoshortreal(inputB));
-            $display("Test ", i, ": ", A, "+", B, " = ", $bitstoshortreal(out), " Expected: ", expected, " Passed: ", passed);
-            numberOfTests++;
-            numberOfSuccessfullTests += passed;
-        
-        end
+        A = 4;
+        B = 0.5;
+        expected = 2;
+        inputA = real_to_ieee(A);
+        inputB = real_to_ieee(B);
+        #10;
+        diff = absolute(($bitstoshortreal(out)) - expected);
+        passed = diff < tolerance;
+        $display("A value is ", $bitstoshortreal(inputA), " B value is ", $bitstoshortreal(inputB));
+        $display("Test 6: = ", $bitstoshortreal(out), " Expected: ", expected, " Passed: ", passed);
+        numberOfTests++;
+        numberOfSuccessfullTests += passed;
         
         $display("Passed ", numberOfSuccessfullTests, " out of ", numberOfTests, " tests");
         
         end
+
 endmodule

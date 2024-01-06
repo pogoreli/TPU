@@ -21,9 +21,9 @@ module divide(
 
     logic [8:0] bias = 9'b001111111;
     
-    logic add, substract;
-    assign add = 1'b0;
-    assign substract = 1'b1;
+    logic [1:0] add, substract;
+    assign add = 2'b00;
+    assign substract = 2'b01;
     
     logic [8:0] exponentAIn, exponentBIn;
     assign exponentAIn = {1'b0, inputA[30:23]};

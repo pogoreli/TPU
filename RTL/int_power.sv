@@ -2,12 +2,12 @@
 
 module int_power(
     input logic[31:0] inputA,
-    output logic [50:0][31:0] out
+    output logic [30:0][31:0] out
     );
     
     genvar i;
     generate
-        for (i = 2; i <= 50; i++) begin : power_calculation
+        for (i = 2; i <= 30; i++) begin : power_calculation
             multiply multiply_inst(.inputA(inputA), .inputB(out[i-1]), .out(out[i]));
         end
     endgenerate

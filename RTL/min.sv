@@ -52,9 +52,9 @@ logic signA, signB;
             largerSign = signA;
         end
         
-        $display("smaller Mantissa %b ", smallerMantissa, " larger Mantissa %b ", largerMantissa);
-        $display("smaller Exponent %b ", smallerExponent, " larger Exponent %b ", largerExponent);
-        $display("smaller Sign %b ", smallerSign, " larger Sign %b ", largerSign);
+//        $display("smaller Mantissa %b ", smallerMantissa, " larger Mantissa %b ", largerMantissa);
+//        $display("smaller Exponent %b ", smallerExponent, " larger Exponent %b ", largerExponent);
+//        $display("smaller Sign %b ", smallerSign, " larger Sign %b ", largerSign);
         
         //Assigning the same exponent to both numbers
         exponentDifference = largerExponent - smallerExponent;
@@ -107,7 +107,7 @@ logic signA, signB;
         //Concantenating the numbers to return the output
         mantissaOut = mantissaNotNormalized[22:0];
         exponentOut = exponentNotNormalized + bias;
-        $display("Mantissa out %b ", mantissaOut, " Exponent out %b ", exponentOut, " Sign out %b ", signOut);
+//        $display("Mantissa out %b ", mantissaOut, " Exponent out %b ", exponentOut, " Sign out %b ", signOut);
         
         out = {signOut, exponentOut[7:0], mantissaOut};
         

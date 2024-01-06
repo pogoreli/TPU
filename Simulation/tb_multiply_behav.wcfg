@@ -3,45 +3,21 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="tb_multiply_behav.wdb" id="1">
+      <db_ref path="tb_ln_behav.wdb" id="1">
          <top_modules>
             <top_module name="glbl" />
-            <top_module name="tb_multiply" />
+            <top_module name="tb_ln" />
          </top_modules>
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="30000fs"></ZoomEndTime>
-      <Cursor1Time time="29996fs"></Cursor1Time>
+      <ZoomStartTime time="999995fs"></ZoomStartTime>
+      <ZoomEndTime time="1000002fs"></ZoomEndTime>
+      <Cursor1Time time="1000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="296"></NameColumnWidth>
-      <ValueColumnWidth column_width="144"></ValueColumnWidth>
+      <ValueColumnWidth column_width="100"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="3" />
-   <wvobject fp_name="/tb_multiply/inputA" type="array">
-      <obj_property name="ElementShortName">inputA[31:0]</obj_property>
-      <obj_property name="ObjectShortName">inputA[31:0]</obj_property>
-      <obj_property name="Radix">REALRADIX</obj_property>
-      <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
-      <obj_property name="radix_fractionWidth">24</obj_property>
-      <obj_property name="radix_otherWidth">8</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_multiply/inputB" type="array">
-      <obj_property name="ElementShortName">inputB[31:0]</obj_property>
-      <obj_property name="ObjectShortName">inputB[31:0]</obj_property>
-      <obj_property name="Radix">REALRADIX</obj_property>
-      <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
-      <obj_property name="radix_fractionWidth">24</obj_property>
-      <obj_property name="radix_otherWidth">8</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_multiply/out" type="array">
-      <obj_property name="ElementShortName">out[31:0]</obj_property>
-      <obj_property name="ObjectShortName">out[31:0]</obj_property>
-      <obj_property name="Radix">REALRADIX</obj_property>
-      <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
-      <obj_property name="radix_fractionWidth">24</obj_property>
-      <obj_property name="radix_otherWidth">8</obj_property>
-   </wvobject>
+   <WVObjectSize size="0" />
 </wave_config>

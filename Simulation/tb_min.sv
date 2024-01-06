@@ -1,8 +1,7 @@
 `timescale 1ns / 1ps
 
 module tb_min;
-
-logic [31:0] inputA, inputB;
+    logic [31:0] inputA, inputB;
     logic [31:0] out;
     
     shortreal tolerance = 0.000000001;
