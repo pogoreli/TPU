@@ -46,6 +46,9 @@ module divide(
     assign mantissaAScaled = mantissaA << 23;
     assign mantissaBScaled = mantissaB;
     assign mantissaNotNormalized = mantissaAScaled / mantissaBScaled;
+    
+    logic [31:0] zero;
+    assign zero = 32'b00000000000000000000000000000000;
 
     always_comb begin
 //        $display("mantissaAScaled %b ", mantissaAScaled, " mantissaBScaled %b ", mantissaBScaled);
@@ -54,32 +57,35 @@ module divide(
 //        $display("Mantissa A %b ", mantissaA, " Exponent A %b ", exponentA, " Sign A %b ", signA);
 //        $display("Mantissa B %b ", mantissaB, " Exponent B %b ", exponentB, " Sign B %b ", signB);
 //        $display("Mantissa not normalized %b ", mantissaNotNormalized, " Sum of exponents %b ", sumOfExponents, " Sign out %b ", signOut);
-
-        mantissaDuringNormalization = mantissaNotNormalized;
-        exponentDuringNormalization = sumOfExponentsWithBias[7:0];
-
-
-        if (mantissaDuringNormalization[47:24] > 0) begin
-            for(int i = 0; i < 24; i++) begin
-                if(mantissaDuringNormalization[47:24] > 0) begin
-                    mantissaDuringNormalization = mantissaDuringNormalization >> 1;
-                    exponentDuringNormalization = exponentDuringNormalization + 1;
+          if(inputA == zero || inputB == zero) begin
+            out = zero;
+          end else begin
+            mantissaDuringNormalization = mantissaNotNormalized;
+            exponentDuringNormalization = sumOfExponentsWithBias[7:0];
+    
+    
+            if (mantissaDuringNormalization[47:24] > 0) begin
+                for(int i = 0; i < 24; i++) begin
+                    if(mantissaDuringNormalization[47:24] > 0) begin
+                        mantissaDuringNormalization = mantissaDuringNormalization >> 1;
+                        exponentDuringNormalization = exponentDuringNormalization + 1;
+                    end
+                end
+            end else begin
+                for(int i = 0; i < 24; i++) begin
+                    if(mantissaDuringNormalization[23] == 0) begin
+                        mantissaDuringNormalization = mantissaDuringNormalization << 1;
+                        exponentDuringNormalization = exponentDuringNormalization - 1;
+                    end
                 end
             end
-        end else begin
-            for(int i = 0; i < 24; i++) begin
-                if(mantissaDuringNormalization[23] == 0) begin
-                    mantissaDuringNormalization = mantissaDuringNormalization << 1;
-                    exponentDuringNormalization = exponentDuringNormalization - 1;
-                end
-            end
+            
+            mantissaOut = mantissaDuringNormalization[22:0];
+            exponentOut = exponentDuringNormalization;
+    
+    //        $display("Mantissa out %b ", mantissaOut, " Exponent out %b ", exponentOut, " Sign out %b ", signOut);
+            
+            out = {signOut, exponentOut[7:0], mantissaOut};
         end
-        
-        mantissaOut = mantissaDuringNormalization[22:0];
-        exponentOut = exponentDuringNormalization;
-
-//        $display("Mantissa out %b ", mantissaOut, " Exponent out %b ", exponentOut, " Sign out %b ", signOut);
-        
-        out = {signOut, exponentOut[7:0], mantissaOut};
     end
 endmodule

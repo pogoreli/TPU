@@ -43,31 +43,37 @@ module multiply(
     assign mantissaB = {1'b1, inputB[22:0]};
     assign mantissaNotNormalized = mantissaA * mantissaB;
     
+    logic [31:0] zero;
+    assign zero = 32'b00000000000000000000000000000000;
+    
     always_comb begin
 //        $display("Raw exponent A %b ", exponentAIn, " Raw exponent B %b ", exponentBIn);
 //        $display("Mantissa A %b ", mantissaA, " Exponent A %b ", exponentA, " Sign A %b ", signA);
 //        $display("Mantissa B %b ", mantissaB, " Exponent B %b ", exponentB, " Sign B %b ", signB);
 //        $display("Mantissa not normalized %b ", mantissaNotNormalized, " Sum of exponents %b ", sumOfExponents, " Sign out %b ", signOut);
-
-        mantissaDuringNormalization = mantissaNotNormalized;
-        exponentDuringNormalization = sumOfExponentsWithBias[7:0];
-
-        if (mantissaDuringNormalization[47] == 0) begin
-            for(int i = 0; i < 48; i++) begin
-                if(mantissaDuringNormalization[47] == 0) begin
-                    mantissaDuringNormalization = mantissaDuringNormalization<<1;
-                    exponentDuringNormalization = exponentDuringNormalization - 1;
+        if(inputA == zero || inputB == zero) begin
+            out = zero;
+        end else begin
+            mantissaDuringNormalization = mantissaNotNormalized;
+            exponentDuringNormalization = sumOfExponentsWithBias[7:0];
+    
+            if (mantissaDuringNormalization[47] == 0) begin
+                for(int i = 0; i < 48; i++) begin
+                    if(mantissaDuringNormalization[47] == 0) begin
+                        mantissaDuringNormalization = mantissaDuringNormalization<<1;
+                        exponentDuringNormalization = exponentDuringNormalization - 1;
+                    end
                 end
             end
+            
+            exponentDuringNormalization = exponentDuringNormalization + 1'b1;
+            
+            mantissaOut = mantissaDuringNormalization[46:24];
+            exponentOut = exponentDuringNormalization;
+    
+    //        $display("Mantissa out %b ", mantissaOut, " Exponent out %b ", exponentOut, " Sign out %b ", signOut);
+            
+            out = {signOut, exponentOut[7:0], mantissaOut};
         end
-        
-        exponentDuringNormalization = exponentDuringNormalization + 1'b1;
-        
-        mantissaOut = mantissaDuringNormalization[46:24];
-        exponentOut = exponentDuringNormalization;
-
-//        $display("Mantissa out %b ", mantissaOut, " Exponent out %b ", exponentOut, " Sign out %b ", signOut);
-        
-        out = {signOut, exponentOut[7:0], mantissaOut};
     end
 endmodule
